@@ -1,6 +1,6 @@
 // Microsoft Visual C++ generated resource script.
 //
-#include "resource."
+#include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
@@ -79,7 +79,7 @@ BEGIN
     CONTROL         "act",7002,"Button",BS_AUTORADIOBUTTON | BS_RIGHT,25,116,20,10
 END
 
-9002 DIALOGEX 30, 20, 571, 141
+9002 DIALOGEX 30, 20, 590, 141
 STYLE DS_SETFONT | DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
 CAPTION "TPFanControl "
 FONT 9, "Segoe UI", 400, 0, 0x0
@@ -89,21 +89,24 @@ BEGIN
     EDITTEXT        8100,126,22,121,13,ES_AUTOHSCROLL | ES_READONLY
     LTEXT           "Switch",IDC_STATIC,103,40,21,8
     EDITTEXT        8103,126,38,29,13,ES_AUTOHSCROLL | ES_READONLY
-    LTEXT           "Mode",IDC_STATIC,103,54,21,8
+    LTEXT           "Mode",IDC_STATIC,103,56,21,8
     CONTROL         "BIOS (embedded controller)",8300,"Button",BS_AUTORADIOBUTTON,129,55,99,10
     CONTROL         "Smart (TPFanControl.ini)",8301,"Button",BS_AUTORADIOBUTTON,129,68,96,10
-    CONTROL         "Manual ",8302,"Button",BS_AUTORADIOBUTTON,129,82,36,10
-    COMBOBOX        8310,171,79,60,56,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",8302,"Button",BS_AUTORADIOBUTTON,129,82,11,10
+    CONTROL         "Manual",-1,"Static",SS_LEFTNOWORDWRAP,102,83,25,8
+    CONTROL         "(0-7)",-1,"Static",SS_LEFTNOWORDWRAP,192,83,37,8
+    CONTROL         "(max-BIOS)",-1,"Static",SS_LEFTNOWORDWRAP,208,83,40,8
+    COMBOBOX        8310,140,81,49,55,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Speed",IDC_STATIC,160,40,21,8
     EDITTEXT        8102,183,38,64,13,ES_AUTOHSCROLL | ES_READONLY
     GROUPBOX        "Temperatures",IDC_STATIC,7,7,85,126
     CONTROL         "",8101,"SysListView32",LVS_REPORT | WS_BORDER | WS_TABSTOP,15,18,70,102
-    GROUPBOX        "Status",9199,97,106,467,27
+    GROUPBOX        "Status",9199,97,106,486,27
     EDITTEXT        8112,103,115,218,13,ES_AUTOHSCROLL | ES_READONLY
-    LTEXT           "Last",IDC_STATIC,324,116,15,8
-    EDITTEXT        8113,340,115,219,13,ES_AUTOHSCROLL | ES_READONLY
-    GROUPBOX        "Log (see TPFanControl.log)",9201,256,7,307,95
-    EDITTEXT        9200,266,18,290,78,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | ES_WANTRETURN | WS_VSCROLL | WS_HSCROLL
+    LTEXT           "Last",IDC_STATIC,324,117,15,8
+    EDITTEXT        8113,340,115,238,13,ES_AUTOHSCROLL | ES_READONLY
+    GROUPBOX        "Log (see TPFanControl.log)",9201,256,7,326,95
+    EDITTEXT        9200,266,18,309,78,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | ES_WANTRETURN | WS_VSCROLL | WS_HSCROLL
     CONTROL         "all",7001,"Button",BS_AUTORADIOBUTTON | BS_RIGHT,21,121,20,10
     CONTROL         "active",7002,"Button",BS_AUTORADIOBUTTON | BS_RIGHT,46,121,31,10
 END
@@ -140,17 +143,17 @@ END
 
 5000 MENU
 BEGIN
-    MENUITEM "Bluetooth",                   5040
+    MENUITEM "Bluetooth",                    5040
     MENUITEM SEPARATOR
-    MENUITEM "Show Window",                 5010
-    MENUITEM "Hide Window",                 5030
-    MENUITEM "Symbol Icon",                 5070
-    MENUITEM "Text Icon",                   5080
+    MENUITEM "Show Window",                  5010
+    MENUITEM "Hide Window",                  5030
+    MENUITEM "Symbol Icon",                  5070
+    MENUITEM "Text Icon",                    5080
     MENUITEM SEPARATOR
-    MENUITEM "BIOS Mode",                   5001
-    MENUITEM "Smart Mode",                  5002
-    MENUITEM "Manual Mode",                 5005
-    MENUITEM "End Program",                 5020
+    MENUITEM "BIOS Mode",                    5001
+    MENUITEM "Smart Mode",                   5002
+    MENUITEM "Manual Mode",                  5005
+    MENUITEM "End Program",                  5020
 END
 
 
@@ -159,28 +162,16 @@ END
 // Icon
 //
 
-// Icon with lowest ID value placed first to ensure application icon
-// remains consistent on all systems.
 1                       ICON                    "app.ico"
-
 21                      ICON                    "ico21.ico"
-
 22                      ICON                    "ico22.ico"
-
 23                      ICON                    "ico23.ico"
-
 24                      ICON                    "ico24.ico"
-
 25                      ICON                    "ico25.ico"
-
 10                      ICON                    "bw.ico"
-
 11                      ICON                    "blue.ico"
-
 12                      ICON                    "yellow.ico"
-
 13                      ICON                    "orange.ico"
-
 14                      ICON                    "red.ico"
 
 
@@ -265,82 +256,4 @@ BEGIN
 END
 #endif    // APSTUDIO_INVOKED
 
-#endif    // Neutral (Default) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
-// German (Germany) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
-LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
-#pragma code_page(1252)
-
-#ifdef APSTUDIO_INVOKED
-/////////////////////////////////////////////////////////////////////////////
-//
-// TEXTINCLUDE
-//
-
-1 TEXTINCLUDE 
-BEGIN
-    "resource.\0"
-END
-
-3 TEXTINCLUDE 
-BEGIN
-    "\r\0"
-END
-
-2 TEXTINCLUDE 
-BEGIN
-    "#include ""afxres.h""\r\0"
-END
-
-#endif    // APSTUDIO_INVOKED
-
-#endif    // German (Germany) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
-// English (United States) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Icon
-//
-
-// Icon with lowest ID value placed first to ensure application icon
-// remains consistent on all systems.
-1                       ICON                    "app.ico"
-
-10                      ICON                    "bw.ico"
-
-11                      ICON                    "blue.ico"
-
-12                      ICON                    "yellow.ico"
-
-13                      ICON                    "orange.ico"
-
-14                      ICON                    "red.ico"
-
-#endif    // English (United States) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-
-#ifndef APSTUDIO_INVOKED
-/////////////////////////////////////////////////////////////////////////////
-//
-// Generated from the TEXTINCLUDE 3 resource.
-//
-
-
-/////////////////////////////////////////////////////////////////////////////
-#endif    // not APSTUDIO_INVOKED
-
+#endif    // !(defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD))
