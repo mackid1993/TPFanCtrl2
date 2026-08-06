@@ -145,7 +145,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="approot.cpp" />
+    <ClCompile Include="backend_pawnio.cpp" />
     <ClCompile Include="dynamicicon.cpp" />
+    <ClCompile Include="ecbackend.cpp" />
+    <ClCompile Include="sharedstate.cpp" />
     <ClCompile Include="fancontrol.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
@@ -175,12 +178,13 @@
     <ClInclude Include="afxres.h" />
     <ClInclude Include="approot.h" />
     <ClInclude Include="dynamicicon.h" />
+    <ClInclude Include="ecbackend.h" />
+    <ClInclude Include="sharedstate.h" />
     <ClInclude Include="fancontrol.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="SystemTraySDK.h" />
     <ClInclude Include="TaskbarTextIcon.h" />
     <ClInclude Include="tools.h" />
-    <ClInclude Include="TVicPort.h" />
     <ClInclude Include="winstuff.h" />
     <ClInclude Include="_prec.h" />
   </ItemGroup>
@@ -204,7 +208,6 @@
     <None Include="res\resource" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="TVicPort.lib" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\xp-manifest.txt" />

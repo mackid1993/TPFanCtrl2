@@ -18,6 +18,7 @@
 #include "_prec.h"
 #include "tools.h"
 #include "fancontrol.h"
+#include "ecbackend.h"
 
 
 //-------------------------------------------------------------------------
@@ -548,6 +549,24 @@ FANCONTROL::ReadConfig(const char* configfile)
 		}
 
 		ok = true;
+
+		extern bool g_clientMode;
+
+		char bufbackend[128];
+		// ActiveMode stays as configured: it is what enables the mode controls,
+		// and a client is kept off the hardware by having no backend open
+		if (g_clientMode)
+			this->Trace("Another instance owns the fan, running as a client of it");
+		else {
+			sprintf_s(bufbackend, sizeof(bufbackend), "Port access via %s", EcBackend_Name());
+			this->Trace(bufbackend);
+		}
+
+		// reading it anyway would report temperatures made of refused reads
+		if (this->UseTWR && !EcBackend_PortSupported(0x1610)) {
+			this->Trace("UseTWR needs ports the loaded module does not permit, using standard EC reads");
+			this->UseTWR = 0;
+		}
 
 		this->Trace("Current Config:");
 		if (SingleFan)

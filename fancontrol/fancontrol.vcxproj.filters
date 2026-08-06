@@ -68,9 +68,6 @@
     <ClInclude Include="tools.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TVicPort.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="winstuff.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -122,7 +119,6 @@
     <None Include="res\resource" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="TVicPort.lib" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\xp-manifest.txt" />

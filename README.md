@@ -23,9 +23,15 @@ I will review those as soon as possible.
 
 ## Requirements
 
-To avoid errors, either install [tvicport](https://www.entechtaiwan.com/dev/port/index.shtm) manually or install the original version of TPFanControl found 
-[here](https://sourceforge.net/projects/tp4xfancontrol/) (source code [here](https://github.com/ThinkPad-Forum/TPFanControl)), 
-and run the dual-fan version instead of the original version.
+Reaching the embedded controller needs a driver. This program uses [PawnIO](https://pawnio.eu), which is signed and loads
+with Memory Integrity turned on. Install it from <https://pawnio.eu>, that is the only thing you need to do.
+
+The module the program loads, `LpcACPIEC.bin`, ships with the release and belongs in the same directory as
+`TPFanControl.exe`, next to the `.ini` file. It is not part of the PawnIO installer, which is why it comes with this
+program instead. See `THIRD-PARTY.md` for its licence.
+
+Older releases used tvicport instead. Its signing certificate expired in 2007 and Windows will eventually stop loading
+it, which is why it was dropped.
 
 Administration permission is required for the program to be able to control system fan speed.
 
@@ -93,16 +99,37 @@ If you get Linker Tools Error LNK2026: module unsafe for SAFESEH image when buil
 - Go to Project properties -> Configuration Properties -> Linker -> Advanced
 - Disable option `Image has Safe Exception Handlers` (No (/SAFESEH:NO)
 
-## Running at startup (Not Recommended)
+## Running at startup
 
-You can choose to run TPFC at startup:
+Right-click the tray icon and select `Start with Windows`. Selecting it again turns it off. That is the whole setup.
 
-- Right-click on fancontrol.exe and select copy
-- Press Windows-r or search for run in the start menu
-- Type `shell:startup` in the run box
-- Right click in the window that opens and select paste shortcut
+Two things get set up, because neither works on its own:
 
-Note: This won't start TPFC until you reboot.
+- The `TPFanControl` service, the same one `-i` installs. It runs as `NT AUTHORITY\SYSTEM` and controls the fans from the
+  moment Windows starts, before anyone logs on.
+- A `Run` entry, so a window opens in whichever session logs on, and you get the tray icon.
+
+A shortcut in `shell:startup` is not an alternative, and neither is the `Run` entry on its own, because reaching the port
+driver needs admin permission and Windows will not silently elevate a startup entry. It simply refuses to run it. The
+service holds the hardware instead, so the window that opens at logon does not need admin at all and you get no prompt.
+
+### Two processes, one controller
+
+With this enabled you will see two `TPFanControl.exe` in Task Manager, one as `SYSTEM` and one as you. That is expected.
+
+The one running as `SYSTEM` owns the fan. The one running as you is only the window: it never opens the port driver, so
+it cannot write the fan register no matter what it is asked to do. It draws what the service publishes, and mode changes
+you make are handed to the service, which applies them and publishes the result back. The log tab tells you which is
+which, a window attached to a service says so on its first line.
+
+Two processes are unavoidable here. A service runs in session 0 and cannot show a user interface, and a tray icon has to
+live in your session, so no single process can do both.
+
+### Headless
+
+If you would rather have no tray icon at all, run `TPFanControl.exe -i` from an admin prompt instead of using the toggle.
+That installs the service and nothing else, and `-u` removes it. A headless install stays headless, the toggle is the
+only thing that touches the `Run` entry.
 
 
 ## Uninstall
@@ -111,7 +138,7 @@ Delete the folder containing the program and the ini file.
 
 That's it, there's no residual files.
 
-If you added the program to run at startup, you will have to also delete the shortcut from the start up folder.
+If you enabled `Start with Windows`, turn it off first, or run `TPFanControl.exe -u` to remove the service.
 
 ## Known Issues
 
