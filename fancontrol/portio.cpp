@@ -20,7 +20,7 @@
 
 #include "_prec.h"
 #include "fancontrol.h"
-#include "TVicPort.h"
+#include "ecbackend.h"
 
 // Registers of the embedded controller
 //
@@ -97,6 +97,16 @@ static void
 InitializeEcPorts(int& ctrlPort, int& dataPort) {
 	if (ctrlPort != 0 && dataPort != 0) return;
 
+	// start on a layout the port backend will actually serve, probing one it
+	// refuses only wastes the full timeout on every step
+	for (const auto& layout : EC_PORT_LAYOUTS) {
+		if (EcBackend_PortSupported(static_cast<USHORT>(layout.ctrl))) {
+			ctrlPort = layout.ctrl;
+			dataPort = layout.data;
+			return;
+		}
+	}
+
 	ctrlPort = EC_PORT_LAYOUTS[0].ctrl;
 	dataPort = EC_PORT_LAYOUTS[0].data;
 }
@@ -130,12 +140,12 @@ BuildEcPortAttempts(
 		InitializeEcPorts(pThis->EC_CTRL, pThis->EC_DATA);
 		sprintf_s(traceText, traceSize,
 			"Trying %s (ctrl=0x%04X data=0x%04X) first",
-			EC_PORT_LAYOUTS[0].name, EC_PORT_LAYOUTS[0].ctrl, EC_PORT_LAYOUTS[0].data);
+			GetEcLayoutName(pThis->EC_CTRL, pThis->EC_DATA), pThis->EC_CTRL, pThis->EC_DATA);
 		pThis->Trace(traceText);
 	}
 
 	// First try currently selected ports
-	if (attemptCount < maxAttempts) {
+	if (attemptCount < maxAttempts && EcBackend_PortSupported(static_cast<USHORT>(pThis->EC_CTRL))) {
 		attempts[attemptCount++] = {
 			pThis->EC_CTRL,
 			pThis->EC_DATA,
@@ -146,6 +156,7 @@ BuildEcPortAttempts(
 	// Then try the other known layouts
 	for (const auto& layout : EC_PORT_LAYOUTS) {
 		if (layout.ctrl == pThis->EC_CTRL && layout.data == pThis->EC_DATA) continue;
+		if (!EcBackend_PortSupported(static_cast<USHORT>(layout.ctrl))) continue;
 		if (attemptCount >= maxAttempts) break;
 		attempts[attemptCount++] = layout;
 	}

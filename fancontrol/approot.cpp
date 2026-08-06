@@ -1,7 +1,7 @@
 #include "_prec.h"
 #include "approot.h"
 #include "fancontrol.h"
-#include "TVicPort.h"
+#include "ecbackend.h"
 
 int APIENTRY WinMain(HINSTANCE instance, HINSTANCE, LPSTR aArgs, int) {
     hInstRes = instance;
@@ -248,22 +248,7 @@ void WorkerThread(void *dummy) {
 		}
 	}
 
-    bool ok = false;
-	bool HardAccess = false;
-	bool NewHardAccess = true;
-
-    for (int i = 0; i < 180; i++) {
-        if (OpenTVicPort()) {
-            ok = true;
-            break;
-        }
-        ::Sleep(1000);
-    }
-	if (ok) {	
-		HardAccess = TestHardAccess();
-		SetHardAccess(NewHardAccess);
-		HardAccess = TestHardAccess();
-
+	if (EcBackend_Open()) {
 		FANCONTROL fc(hInstApp);
 
         g_dialogWnd = fc.GetDialogWnd();
@@ -271,12 +256,16 @@ void WorkerThread(void *dummy) {
 		fc.ProcessDialog();
 
 		::PostMessage(g_dialogWnd, WM_COMMAND, 5020, 0);
-		CloseTVicPort();
+		EcBackend_Close();
 	}
 	else {
 		::MessageBox(HWND_DESKTOP, 
-					"Error during initialization of Port Driver.\r\n"
-					"(tvicport.sys missing in app folder or failed to load)",
+					"Error during initialization of Port Driver.\r\n\r\n"
+					"PawnIO is needed to reach the embedded controller.\r\n"
+					"Install it from https://pawnio.eu and put a module\r\n"
+					"(LpcACPIEC.bin) next to this program.\r\n\r\n"
+					"If both are in place, this machine's embedded\r\n"
+					"controller is not on a port the module permits.",
 					"Fan Control", 
 					MB_ICONERROR | MB_OK | MB_SETFOREGROUND);
 	}

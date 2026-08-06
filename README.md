@@ -23,9 +23,15 @@ I will review those as soon as possible.
 
 ## Requirements
 
-To avoid errors, either install [tvicport](https://www.entechtaiwan.com/dev/port/index.shtm) manually or install the original version of TPFanControl found 
-[here](https://sourceforge.net/projects/tp4xfancontrol/) (source code [here](https://github.com/ThinkPad-Forum/TPFanControl)), 
-and run the dual-fan version instead of the original version.
+Reaching the embedded controller needs a driver. This program uses [PawnIO](https://pawnio.eu), which is signed and loads
+with Memory Integrity turned on. Install it from <https://pawnio.eu>, that is the only thing you need to do.
+
+The module the program loads, `LpcACPIEC.bin`, ships with the release and belongs in the same directory as
+`TPFanControl.exe`, next to the `.ini` file. It is not part of the PawnIO installer, which is why it comes with this
+program instead. See `THIRD-PARTY.md` for its licence.
+
+Older releases used tvicport instead. Its signing certificate expired in 2007 and Windows will eventually stop loading
+it, which is why it was dropped.
 
 Administration permission is required for the program to be able to control system fan speed.
 

@@ -50,7 +50,10 @@ private:
 protected:
 
 public:
-	MUTEXSEM(int state = FALSE, const char* name = "Access_Thinkpad_EC");
+	// Access_EC in the global namespace is what other tools touching the
+	// embedded controller honour, and Windows drives the same ports itself.
+	// The old name was session local, so it coordinated with nothing.
+	MUTEXSEM(int state = FALSE, const char* name = "Global\\Access_EC");
 
 	~MUTEXSEM();
 

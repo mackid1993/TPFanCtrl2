@@ -18,7 +18,7 @@
 #include "_prec.h"
 #include "fancontrol.h"
 #include "tools.h"
-#include "TVicPort.h"
+#include "ecbackend.h"
 
 constexpr auto TP_ECOFFSET_FAN		  = (char)0x2F;    // 1 byte (binary xyzz zzz);
 constexpr auto TP_ECOFFSET_FANSPEED	  = (char)0x84;    // 16 bit word, lo/hi byte;
